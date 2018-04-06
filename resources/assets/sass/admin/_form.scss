@@ -1,0 +1,13 @@
+ul{
+    &.list-permissions {
+        list-style: none;
+        li {
+            &.list-permissions-name{
+                margin-top: 10px;
+            }
+            ul {
+                list-style: none;
+            }
+        }
+    }
+}

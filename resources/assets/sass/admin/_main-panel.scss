@@ -1,0 +1,34 @@
+body a {
+    text-decoration: none;
+}
+.main-panel {
+    position: relative;
+    float: right;
+    width: $calc-sidebar-width;
+    height: 100%;
+    transition: all 0.3s;
+    &.mini {
+        width: $calc-sidebar-mini-width;
+    }
+    &.active {
+        width: 100%;
+    }
+   
+    .content {
+        padding-top: 10px;
+        padding-bottom: 71px;
+        min-height: calc(100% - 123px);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-panel {
+        width: 100%;
+        &.mini {
+            width: 100%;
+        }
+        &.active {
+             width: $calc-sidebar-mini-width;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+	"name": "Auth",
+	"alias": "Auth",
+	"description": "Authentication management module",
+	"authors": {
+		"name": "MTNESS",
+		"email": "hminaya@mtness.com"
+	},
+	"type": "dev",
+	"version": "0.0.0"
+}

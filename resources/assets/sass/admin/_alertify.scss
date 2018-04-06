@@ -1,0 +1,13 @@
+.alertify-logs {
+    z-index: 9998;
+
+    .error:hover {
+        background: rgb(244, 67, 54);
+    }
+    .success:hover {
+        background: rgb(76, 175, 80);
+    }
+}
+.alertify {
+    z-index: 9998;
+}

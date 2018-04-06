@@ -1,0 +1,121 @@
+$bt-primary: map-get($theme-colors, 'primary') !default;
+
+.login-box { 
+    max-width: 440px;
+    padding: 38px;
+    margin: 0 auto;
+    margin-top: 40px;
+    background: #fff;
+    input {
+        &:focus {
+            border-color: $bt-primary;
+            box-shadow: 0 0 8px 0 $bt-primary;
+        }
+    }
+
+}
+.login-input {
+    position: relative;
+    input {
+        padding-left: 40px;
+        &:focus {
+            +i{
+                color: $bt-primary;
+            }
+        }
+    }
+    i {
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 9px 11px;
+        color: #aaa;
+        transition: .3s;
+        font-size: 1.2rem;
+    }
+}
+
+.login-title {
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+a.login-forgot {
+    color: #909090;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover{
+        color: $bt-primary;
+        text-decoration: underline;
+    }
+}
+
+.login-bg{
+    width: 100%;
+    min-height: 100%;
+    height: auto !important;
+    position: fixed;
+    top:0;
+    left:0;
+    background: #545454;
+    background : linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
+    url("/images/system/bg-login.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+     z-index: -1;
+}
+
+.login-app-text{
+    font-size: 3rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.login-error, .login-success {
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    background: #dc3545;
+    margin-bottom: 10px;
+    i {
+        float: left;
+        font-size: 1.2rem;
+        padding: 2px 4px 0px 0px;
+    }
+}
+
+.login-success {
+    background: #28a745;
+}
+
+
+
+.login-spin {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    .login-spinner {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        margin-top: -25px;
+        margin-left: -50px;
+        i {
+            font-size: 6rem;
+            color: #fff;
+        }
+    }
+}

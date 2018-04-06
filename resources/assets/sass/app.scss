@@ -1,0 +1,29 @@
+//bootstrap
+@import "~bootstrap/scss/bootstrap.scss";
+
+
+//toastr
+//@import "~alertify.js/dist/css/alertify.css";
+//datatable
+//@import "~datatables.net-bs4/css/dataTables.bootstrap4.css";
+//@import "~datatables.net-select-bs4/css/select.bootstrap4.css";
+// Admin Theme
+
+
+@import "admin/variables";
+@import "admin/typography";
+@import "admin/alertify";
+@import "admin/buttons";
+@import "admin/inputs";
+@import "admin/switch";
+@import "admin/login";
+@import "admin/wrapper";
+@import "admin/sidebar";
+@import "admin/main-panel";
+@import "admin/navbar";
+@import "admin/page-top";
+@import "admin/content";
+@import "admin/footer";
+@import "admin/datatable";
+@import "admin/form";
+@import "admin/progress-bar";
