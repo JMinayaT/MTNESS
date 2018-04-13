@@ -117,7 +117,8 @@
             },
             getData: function() {
                 axios.get(this.url).then(response => {
-                    this.array = response.data
+                    console.log(response.data.data)
+                    this.array = response.data.data
                 })       
             },
             callMethodsActions(method,data,row) {

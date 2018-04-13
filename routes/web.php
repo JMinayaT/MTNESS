@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/app/{vue_capture?}', function () {
+ return view('vue');
+})->where('vue_capture', '[\/\w\.-]*');

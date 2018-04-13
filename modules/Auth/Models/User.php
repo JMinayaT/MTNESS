@@ -4,10 +4,12 @@ namespace Modules\Auth\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Modules\System\Http\Traits\HasLang;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasLang, HasRoles;
 
     /**
      * The attributes that are mass assignable.

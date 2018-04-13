@@ -3,23 +3,12 @@
 namespace Modules\Auth\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Auth\Models\User;
 use Illuminate\Http\Request;
-use Modules\Auth\Http\Resources\UserResource;
+use Modules\Auth\Http\Resources\RoleResource;
+use Modules\Auth\Models\Role;
 
-
-class UserController extends Controller
+class RoleController extends Controller
 {
-
-    /**
-     * construct method.
-     *
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-       return UserResource::collection(User::all());
+        return RoleResource::collection(Role::all());
     }
 
     /**
@@ -54,10 +43,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Modules\Auth\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         //
     }
@@ -65,10 +54,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Modules\Auth\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
         //
     }
@@ -77,10 +66,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Modules\Auth\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -88,10 +77,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Modules\Auth\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
         //
     }

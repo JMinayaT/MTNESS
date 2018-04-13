@@ -6,3 +6,4 @@
 |--------------------------------------------------------------------------
 */
 Route::apiResource('user', 'UserController');
+Route::apiResource('role', 'RoleController');

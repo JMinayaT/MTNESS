@@ -38,17 +38,23 @@ Vue.prototype.$auth = {
     }
 }
 
-//import CurrenciesRoutes from '../../../modules/Currencies/Resources/Assets/js/router.js'
+import Page from './components/Page.vue'
+import DataTable from './components/DataTable.vue'
 
-//const baseRoutes = [];
-//const routes = baseRoutes.concat(CurrnciesRoutes);
+Vue.component('page', Page)
+Vue.component('datatable', DataTable)
 
-//const router = new VueRouter({
-    //mode: 'history',
-  //  routes
-//});
+const baseRoutes = [];
+
+import PermissionRoutes from '../../../modules/Auth/Resources/assets/js/permission/router.js'
+
+const routes = baseRoutes.concat(PermissionRoutes);
+const router = new VueRouter({
+    mode: 'history',
+    routes
+});
 
 const app = new Vue({
     el: '#app',
-  //  router
+    router
 });
