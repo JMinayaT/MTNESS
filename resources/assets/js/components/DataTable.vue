@@ -1,10 +1,10 @@
 <template>
-    <table class="table table-striped table-bordered table-hover" width="100%">
+    <table class="table table-bordered table-hover" width="100%">
         <thead>
             <tr>
-                <th v-if="select"></th>
+                <th v-if="select" width="3%"></th>
                 <th v-for="column in renderColumns" v-html="title(column)" :key='column.data'></th>
-                <th v-if="isActions">{{ actionsName }}</th>
+                <th v-if="isActions" width="13%">{{ actionsName }}</th>
             </tr>
         </thead>
 
@@ -22,7 +22,7 @@
                     <span :value="item['id']"></span>
                 </td>
                 <td v-for="column in renderColumns" :key='column.data'>{{item[column.data]}}</td>
-                <td :id="'dt-'+index" v-if="isActions">
+                <td :id="'dt-'+index" v-if="isActions" style="text-align: center;">
                     <span>
                         <button v-for="action in actions" v-if="action.permission" :class="action.class" :key="action.name" 
                             @click="callMethodsActions(action.method, item, 'dt-'+index)">
@@ -117,12 +117,11 @@
             },
             getData: function() {
                 axios.get(this.url).then(response => {
-                    console.log(response.data.data)
                     this.array = response.data.data
                 })       
             },
             callMethodsActions(method,data,row) {
-                this.$parent[method]([data,row])
+                this.$parent[method]([data,row][0])
             },
             arraySelect: function() {
                 let ids = [];

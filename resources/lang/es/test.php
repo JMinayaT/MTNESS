@@ -1,0 +1,9 @@
+<?php
+
+return [
+
+
+    'hi' => 'Hola',
+
+
+];

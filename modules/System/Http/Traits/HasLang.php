@@ -9,7 +9,7 @@ trait HasLang
      */
     public function lang()
     {
-        return $this->belongsToMany('Modules\Langs\Models\Lang');
+        return $this->belongsToMany('Modules\System\Models\Lang');
     }
 
     public function langName()

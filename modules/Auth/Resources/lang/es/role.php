@@ -6,6 +6,7 @@ return [
     'home'                  =>  'Inicio',
     'list-roles'            =>  'Lista de roles',
     'list'                  =>  'Lista',
+    'edit'                  =>  'Editar',
     'new-role'              =>  'Nuevo role',
     'edit-role'             =>  'Editar role',
     'view-role'             =>  'Ver role',

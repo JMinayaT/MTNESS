@@ -8,19 +8,22 @@
 
 
 //LANG
-Route::get('js/{module}/lang-{locale}.js', function ($module, $locale) {
+Route::get('js/lang-{locale}.js', function ($locale) {
     // Add locale to the cache key
-    $json = \Cache::rememberForever("{$module}-lang-{$locale}.js", function () use ($locale,$module) {
-        $lang = config('app.locale');
-
-        $files   = glob(base_path('modules/'.$module.'/Resources/lang/' . $lang . '/*.php'));
+    $json = \Cache::rememberForever("lang-{$locale}.js", function () use ($locale) {
+        $allFiles = [];
+        foreach(Module::allName() as $module){
+            $allFiles[] = glob(base_path('modules/'.$module.'/Resources/lang/' . $locale . '/*.php'));
+        }
+        //$files   = glob(base_path('modules/'.$module.'/Resources/lang/' . $locale . '/*.php'));
         $strings = [];
 
-        foreach ($files as $file) {
-            $name           = basename($file, '.php');
-            $strings[$name] = require $file;
+        foreach ($allFiles as $files) {
+            foreach ($files as $file) {
+                $name           = basename($file, '.php');
+                $strings[$name] = require $file;
+            }
         }
-
         return $strings;
     });
 

@@ -13,4 +13,8 @@
 
 Route::get('/app/{vue_capture?}', function () {
  return view('vue');
-})->where('vue_capture', '[\/\w\.-]*');
+})->where('vue_capture', '[\/\w\.-]*')->middleware('auth');
+
+Route::get('/', function () {
+    return redirect('app');
+})->middleware('auth');

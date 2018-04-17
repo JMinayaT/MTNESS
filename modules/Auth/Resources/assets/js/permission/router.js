@@ -11,16 +11,16 @@ export default [{
     {
         path: '/app/roles/create',
         component: PermissionCreate,
-        name: 'roles.create'
+        name: 'role.create'
     },
     {
-        path: '/app/roles/edit',
+        path: '/app/roles/edit/:id',
         component: PermissionEdit,
-        name: 'roles.edit'
+        name: 'role.edit'
     },
     {
-        path: '/app/roles/view',
+        path: '/app/roles/view/:id',
         component: PermissionView,
-        name: 'roles.view'
+        name: 'role.view'
     },
 ];
