@@ -6,11 +6,15 @@
                 <div class="card-header d-flex justify-content-between">
                     <div><i class="fas fa-list"></i> {{ $trans('role.list-roles') }}</div>
 
-                    <router-link :to="{ name: 'role.create'}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> {{ $trans('role.new') }}</router-link>
+                    <div><router-link :to="{ name: 'role.create'}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> {{ $trans('role.new') }}</router-link>
+
+                    <button type="button" class="btn btn-danger btn-sm" @click.prevent="deleteSelectRoles()">
+                        <i class="fas fa-trash-alt"></i> {{ $trans('role.remove') }}
+                    </button></div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <datatable url="/api/role" 
+                        <datatable ref="datatable" url="/api/role" 
                             :columns="columns"
                             :actions="actions"
                             >
@@ -24,15 +28,17 @@
 </template>
 
 <script>
+import toastr from 'toastr'
     export default {
         created() {
-            if(! this.$auth.can('browse_roles')){
+            if( !(this.$auth.can('browse_roles') && this.$auth.can('read_roles')) ){
                 this.$router.push({ path: '/app'})
             }
         },
         data () {
             return  {
                 columns: [
+                    { data: "id", title: '#', style:'width: 4%;'},
                     { data: "name", title: this.$trans('role.name') },
                     { data: "actions",  title: this.$trans('role.actions') },
                  ],
@@ -52,6 +58,62 @@
             editRole: function(data) {
                 this.$router.push({ name: 'role.edit', params: { id: data.id }})          
             },
+
+            deleteRole: function(data) {
+                let url = '/api/role/' + data.id
+                let vm = this
+                $.confirm({
+                    title: vm.$trans('role.confirm-d'),
+                    content: '',
+                    type: 'red',
+                    buttons: {
+                        confirm: {
+                            btnClass: 'btn-red',
+                            text: vm.$trans('role.remove'),
+                            action: function(){
+                                axios.delete(url).then(response =>{
+                                    toastr.success(vm.$trans('role.removed'))
+                                    vm.$refs.datatable.deleteDtRow(data.dtp)        
+                                });
+                            }
+                        },
+                        cancel:{
+                            text: vm.$trans('role.cancel'),
+                            action: function(){}
+                        },
+                    }
+                });
+            },
+
+            deleteSelectRoles: function() {
+                let ids = this.$refs.datatable.arraySelect()
+                if (ids.length == 0) {
+                    return toastr.error(this.$trans('role.not-select-d-msj'))
+                }
+                let url = '/api/delete-many/role'
+                let vm = this
+                $.confirm({
+                    title: vm.$trans('role.confirm-dm'),
+                    content: '',
+                    type: 'red',
+                    buttons: {
+                        confirm: {
+                            btnClass: 'btn-red',
+                            text: vm.$trans('role.remove'),
+                            action: function(){
+                                axios.post(url, {'ids':ids}).then(response =>{
+                                    vm.$refs.datatable.deleteDtSelect()
+                                    toastr.success(vm.$trans('role.removed'));
+                                });
+                            }
+                        },
+                        cancel:{
+                            text: vm.$trans('role.cancel'),
+                            action: function(){}
+                        },
+                    }
+                });
+            },    
         }
     }
 </script>

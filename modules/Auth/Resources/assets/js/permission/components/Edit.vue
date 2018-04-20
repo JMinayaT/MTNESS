@@ -68,7 +68,7 @@
             }
         },
         created: function () {
-            if(! this.$auth.can('browse_roles')){
+            if( !(this.$auth.can('browse_roles') && this.$auth.can('edit_roles')) ){
                 this.$router.push({ path: '/app'})
             }
             this.getRole()

@@ -30,6 +30,7 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('read', Role::class);
         return RoleResource::collection(Role::all());
     }
 
@@ -40,23 +41,16 @@ class RoleController extends Controller
      */
     public function indexPermission()
     {
+        $this->authorize('read', Role::class);
         return PermissionResource::collection(Permission::all());
     }
     public function getRolesPermissions($id) {
+        $this->authorize('read', Role::class);
         $role = Role::findOrFail($id);
         $plucked = $role->permissions->pluck('pivot')->pluck('permission_id');
         return $plucked;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -66,6 +60,7 @@ class RoleController extends Controller
      */
     public function store(RoleStoreRequest $request)
     {
+        $this->authorize('store', Role::class);
         $role = new Role();
         $role->name = $request->name;
         $role->save();
@@ -82,6 +77,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('read', Role::class);
         return new RoleResource(Role::find($id));
     }
 
@@ -105,6 +101,7 @@ class RoleController extends Controller
      */
     public function update(RoleUpdateRequest $request, $id)
     {
+        $this->authorize('update', Role::class);
         $role = Role::findOrFail($id);
         $input = $request->except(['permissions']);
         $role->fill($input)->save();
@@ -121,6 +118,19 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('delete', Role::class);
+        $role = Role::findOrFail($id);
+        $role->delete();
+    }
+     /**
+     * Remove the many resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyMany(Request $request)
+    {
+        $this->authorize('delete', Role::class);
+        \DB::table('roles')->whereIn('id', $request['ids'])->delete(); 
     }
 }

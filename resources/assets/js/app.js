@@ -40,23 +40,24 @@ Vue.prototype.$auth = {
 
 import Page from './components/Page.vue'
 import DataTable from './components/DataTable.vue'
-import Error404 from './components/errors/404.vue'
+import NotFound from './components/errors/NotFound.vue'
 
 Vue.component('page', Page)
 Vue.component('datatable', DataTable)
-Vue.component('404', Error404)
+Vue.component('notfound', NotFound)
 
 const baseRoutes = [];
 
 import PermissionRoutes from '../../../modules/Auth/Resources/assets/js/permission/router.js'
+import UsersRoutes from '../../../modules/Auth/Resources/assets/js/user/router.js'
 
-const errorsRoutes = [{
+const ErrorsRoutes = [{
     path: '*',
-    component: Error404,
-    name: '404'
+    component: NotFound,
+    name: 'notfound'
     },
 ]
-const routes = baseRoutes.concat(PermissionRoutes, errorsRoutes );
+const routes = baseRoutes.concat(ErrorsRoutes, PermissionRoutes, UsersRoutes);
 const router = new VueRouter({
     mode: 'history',
     routes

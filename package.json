@@ -23,6 +23,7 @@
         "vue-router": "^3.0.1"
     },
     "dependencies": {
+        "jquery-confirm": "^3.3.2",
         "npm": "^5.8.0",
         "toastr": "^2.1.4"
     }

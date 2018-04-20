@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th v-if="select" width="3%"></th>
-                <th v-for="column in renderColumns" v-html="title(column)" :key='column.data'></th>
+                <th v-for="column in renderColumns" v-html="title(column)" :key='column.data' :class='column.class' :style='column.style'></th>
                 <th v-if="isActions" width="13%">{{ actionsName }}</th>
             </tr>
         </thead>
@@ -87,6 +87,9 @@
                              "url": "/api/lang/datatable"
                         }
                      },
+                     {
+                        "order": [[ 1, "desc" ]]
+                     },
                      this.options,
                      selectAct
                 );                        
@@ -121,6 +124,7 @@
                 })       
             },
             callMethodsActions(method,data,row) {
+                [data,row][0].dtp=[data,row][1];
                 this.$parent[method]([data,row][0])
             },
             arraySelect: function() {

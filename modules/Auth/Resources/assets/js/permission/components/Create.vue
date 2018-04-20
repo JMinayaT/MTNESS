@@ -62,7 +62,7 @@ import toastr from 'toastr'
             }
         },
         created: function () {
-             if(! this.$auth.can('browse_roles')){
+            if( !(this.$auth.can('browse_roles') && this.$auth.can('add_roles')) ){
                 this.$router.push({ path: '/app'})
             }
             this.getPermissions()
@@ -74,7 +74,7 @@ import toastr from 'toastr'
                     this.newRole = {name: '', permissions: []}
                     console.log(this.$trans('role.c-success'))
                     toastr.success(this.$trans('role.c-success'))
-                    this.$parent.component = 'list-roles'
+                    this.$router.push({ name: 'roles'})
                 }).catch(error => {
                     console.log(error)
                     this.errors = error.response.data.errors

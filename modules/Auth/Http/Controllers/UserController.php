@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Modules\Auth\Models\User;
 use Illuminate\Http\Request;
 use Modules\Auth\Http\Resources\UserResource;
-
+use Modules\Auth\Http\Requests\UserStoreRequest;
+use Modules\Auth\Http\Requests\UserUpdateRequest;
 
 class UserController extends Controller
 {
@@ -48,7 +49,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('store', User::class);
+        $user = User::create([
+            'name' => $request['name'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'active' => $request['active'],
+        ]);
+        if($request->roles <> ''){
+            $user->roles()->attach($request->roles);
+        }
+        return;
     }
 
     /**
@@ -82,7 +94,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        
     }
 
     /**
@@ -91,8 +103,22 @@ class UserController extends Controller
      * @param  \Modules\Auth\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $this->authorize('delete', User::class);
+        $user = User::findOrFail($id);
+        $user->delete();
+    }
+
+    /**
+     * Remove the many resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyMany(Request $request)
+    {
+        $this->authorize('delete', User::class);
+        \DB::table('users')->whereIn('id', $request['ids'])->delete(); 
     }
 }

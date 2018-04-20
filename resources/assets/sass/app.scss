@@ -8,6 +8,13 @@
 //datatable
 @import "~datatables.net-bs4/css/dataTables.bootstrap4.css";
 @import "~datatables.net-select-bs4/css/select.bootstrap4.css";
+
+//toastr
+@import "~toastr/toastr.scss";
+
+//jquery-confirm
+@import "~jquery-confirm/css/jquery-confirm.css";
+
 // Admin Theme
 
 
@@ -28,3 +35,4 @@
 @import "admin/datatable";
 @import "admin/form";
 @import "admin/progress-bar";
+@import "admin/errors";
