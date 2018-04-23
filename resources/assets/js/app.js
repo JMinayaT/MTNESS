@@ -51,6 +51,7 @@ const baseRoutes = [];
 import PermissionRoutes from '../../../modules/Auth/Resources/assets/js/permission/router.js'
 import UsersRoutes from '../../../modules/Auth/Resources/assets/js/user/router.js'
 import LangRoutes from '../../../modules/System/Resources/assets/js/lang/router.js'
+import CurrenciesRoutes from '../../../modules/Accounting/Resources/assets/js/currencies/router.js'
 
 const ErrorsRoutes = [{
     path: '*',
@@ -58,7 +59,7 @@ const ErrorsRoutes = [{
     name: 'notfound'
     },
 ]
-const routes = baseRoutes.concat(ErrorsRoutes, PermissionRoutes, UsersRoutes, LangRoutes);
+const routes = baseRoutes.concat(ErrorsRoutes, PermissionRoutes, UsersRoutes, LangRoutes, CurrenciesRoutes);
 const router = new VueRouter({
     mode: 'history',
     routes

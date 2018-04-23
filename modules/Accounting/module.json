@@ -1,0 +1,11 @@
+{
+	"name": "Accounting",
+	"alias": "Accounting",
+	"description": "accounting manager module",
+	"authors": {
+		"name": "",
+		"email": ""
+	},
+	"type": "dev",
+	"version": "0.0.0"
+}

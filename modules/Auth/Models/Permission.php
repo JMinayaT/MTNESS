@@ -26,6 +26,11 @@ class Permission extends ModelPermission
             'add_users',
             'delete_users',
 
+            'browse_currency',
+            'read_currency',
+            'add_currency',
+            'delete_currency',
+
             'browse_lang',
             'read_lang',
             'default_lang',

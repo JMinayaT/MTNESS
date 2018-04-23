@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <div><i class="fas fa-list"></i> {{ $trans('user.list-users') }}</div>
+                    <div><i class="fas fa-cogs"></i> {{ $trans('lang.set_lang') }}</div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
