@@ -28,6 +28,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('read', User::class);
        return UserResource::collection(User::all());
     }
 
@@ -69,9 +70,10 @@ class UserController extends Controller
      * @param  \Modules\Auth\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $this->authorize('read', User::class);
+        return new UserResource(User::find($id));
     }
 
     /**
@@ -92,9 +94,34 @@ class UserController extends Controller
      * @param  \Modules\Auth\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, $id)
     {
-        
+        $this->authorize('update', User::class);
+        $user = User::findOrFail($id);
+        if($request['updatePassword']){
+            $user->update([
+                'name' => $request['name'],
+                'username' => $request['username'],
+                'email' => $request['email'],
+                'password' => bcrypt($request['password']),
+                'active' => $request['active'],
+            ]);
+        }
+        else{
+            $user->update([
+                'name' => $request['name'],
+                'username' => $request['username'],
+                'email' => $request['email'],
+                'active' => $request['active'],
+            ]);
+        }
+        if ($request->roles <> '') {
+            $user->roles()->sync($request->roles);        
+        }        
+        else {
+            $user->roles()->detach(); 
+        }
+        return;
     }
 
     /**

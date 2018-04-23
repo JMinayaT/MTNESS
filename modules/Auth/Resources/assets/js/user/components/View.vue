@@ -1,47 +1,54 @@
 <template>
     <div>
-        <page :title="$trans('role.roles')"></page>
+        <page :title="$trans('user.users')" icon="fas fa-users"></page>
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <div><i class="fas fa-eye"></i> {{ $trans('role.view-role') }}</div>
+                    <div><i class="fas fa-eye"></i> {{ $trans('user.view-user') }}</div>
                     
                     <div>
-                        <router-link :to="{ name: 'roles'}" class="btn btn-primary btn-sm"><i class="fas fa-list"></i> {{ $trans('role.list') }}</router-link>
+                        <router-link :to="{ name: 'users'}" class="btn btn-primary btn-sm"><i class="fas fa-list"></i> {{ $trans('user.list') }}</router-link>
 
-                        <router-link :to="{ name: 'role.create'}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> {{ $trans('role.new') }}</router-link>
+                        <router-link :to="{ name: 'user.create'}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> {{ $trans('user.new') }}</router-link>
 
-                        <router-link :to="{ name: 'role.edit', params: { id: role.id } }" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i> {{ $trans('role.edit') }}</router-link>
-                    
-                    
+                        <router-link :to="{ name: 'user.edit', params: { id: user.id } }" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i> {{ $trans('user.edit') }}</router-link>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ this.$trans('role.name') }}</h5> 
-        <p class="card-text">{{role.name}}</p>
-        <br>
-        <h5 class="card-title">{{ this.$trans('role.permissions') }}</h5>
-
-        <ul class="list-permissions">
-             <li v-for="(item, index) in renderPermissions" :key="index" class="list-permissions-name">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"  :value="item.name" :id="item.name" disabled>
-                    <label class="form-check-label" :for="item.name">
-                        <strong> {{item.name}}</strong> 
-                    </label>
-                </div>
-                <ul>
-                    <li v-for="item in item.data" :key="item.id">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" :value="item.id" v-model="permissionData" :id="'perm-'+item.id" disabled>
-                            <label class="form-check-label" :for="'perm-'+item.id">
-                                {{item.name}}
-                            </label>
-                        </div>     
-                    </li>
-                </ul>
-            </li>
-        </ul> 
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Id</th>
+                                    <td>{{ user.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{{ $trans('user.name') }}</th>
+                                    <td>{{ user.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{{ $trans('user.user') }}</th>
+                                    <td>{{ user.username }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{{ $trans('user.email') }}</th>
+                                    <td>{{ user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{{ $trans('user.role') }}</th>
+                                    <td>{{ getRoleName(user.roles) }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{{ $trans('user.status') }}</th>
+                                    <td><span v-bind:class="{ 'badge badge-success': user.active == 1,'badge badge-danger': user.active == 0 }">{{ toActive(user.active)}}</span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{{ $trans('user.created') }}</th>
+                                    <td>{{ user.created_at }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,70 +59,35 @@
     export default {
         data () {
             return  {
-                permissions: {},
-                renderPermissions: {},
-                permissionData: [],
-                role: {},
-                id: this.$route.params.id
+                user: {},
             }
         },
         created: function () {
-            if( !(this.$auth.can('browse_roles') && this.$auth.can('read_roles')) ){
-                this.$router.push({ path: '/app'})
+            if( !(this.$auth.can('browse_users') && this.$auth.can('read_users')) ){
+                this.$router.push({ path: '/app/403'})
             }
-            this.getPermissions()
-            this.getRole()
+            this.getUser()
         },
         methods: {
-            getPermissions: function() {
-               let url = '/api/permission'
-               let vm = this
-               axios.get(url).then(function(response){
-                    vm.permissions = response.data.data
-                    vm.renderPermissions = vm.getRenderPermissions()
-                    vm.getRolesPermissions(vm.id)
-               })
-            },
-            getRole: function() {
-                let url = '/api/role/'+ this.id
+            getUser: function() {
+                let url = '/api/user/'+ this.$route.params.id
                 let vm = this
                 axios.get(url).then(function(response){
-                    vm.role = response.data.data
+                    vm.user = response.data.data
                 })
             },
-           getRolesPermissions: function(id) {
-               let url = '/api/roles-permissions/'+id
-               let vm = this
-               axios.get(url).then(function(response){
-                    vm.permissionData = response.data   
-               })
-           },
-            getRenderPermissions: function() {
-                let render = []
-                let names = []
-                let result = []
-                let objv = { name: " ", data: [] }
-
-                this.permissions.forEach(element => {
-                    element.name = element.name.replace("_"," ")
-                    render.push(element)
-                })
-                render.forEach(element => {
-                    names.push(element.name.split(" ")[1])
-                })
-                Array.prototype.unique = function (a) {
-                    return function () { return this.filter(a) }}(function (a, b, c) {return c.indexOf(a, b + 1) < 0
-                })
-                names.unique().forEach(name => {
-                    let pass = []        
-                    render.forEach(element => {
-                        (name == element.name.split(" ")[1]) ? pass.push(element) : null
-                    });
-                    (pass.length <= 1 ) ? objv.data.push(pass[0]) : result.push({name:name, data:pass})  
-                })
-                result.unshift(objv)
-                return result     
+            getRoleName: function(data){
+                return (data && data.length == 0) ? this.$trans('user.n-results') : (data)?data[0].name.replace("_", " "):""
             },
+            toActive: function(value){
+                if(value == true){
+                    return this.$trans('user.activated')
+                }
+                else {
+                    return this.$trans('user.disabled')
+                }
+            }
+           
         }
     }
 </script>

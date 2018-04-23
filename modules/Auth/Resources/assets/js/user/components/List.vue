@@ -61,7 +61,8 @@ import toastr from 'toastr'
                     "columnDefs": [ 
                         {
                             "render": function ( data, type, row ) {
-                                if (row[5] == true) {
+                                console.log(row[5])
+                                if (row[5] == 'true') {
                                     return `<span class="badge badge-success">${vm.$trans('user.activated')}</span>`
                                 }
                                 else {

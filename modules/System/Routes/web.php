@@ -35,3 +35,14 @@ Route::get('js/lang-{locale}.js', function ($locale) {
 });
 
 //<script src="/js/module/lang-{{ \App::getLocale() }}.js"></script>
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('api')->group(function () {
+        Route::get('lang', 'LangController@index')->name('lang');
+        Route::get('default-lang', 'LangController@getDefaultLang')->name('lang.default');
+        Route::post('default-lang', 'LangController@updateDefaultLang')->name('lang.default.update');
+        Route::get('user-lang', 'LangController@getUserLang')->name('lang.user.get');
+        Route::post('user-lang', 'LangController@updateUserLang')->name('lang.user.update');
+    });
+});
